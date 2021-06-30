@@ -10,7 +10,7 @@ function App() {
     const promise = new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       // try {
-      if (fileReader !== undefined) {
+      if (fileReader !== undefined) {  // still doesn't work
         fileReader.readAsArrayBuffer(file);
       
         fileReader.onload = (e) => {
