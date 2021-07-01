@@ -7,12 +7,16 @@ function App() {
   const [items, setItems] = useState([]);
 
   const readExcel = (file) => {
+    
     const promise = new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
+      try {
+        console.log(1);
+        const fileReader = new FileReader();
+        console.log(2);
       // try {
-      if (fileReader !== undefined) {  // still doesn't work
+      // if (fileReader !== undefined) {  // still doesn't work
         fileReader.readAsArrayBuffer(file);
-      
+        console.log(3);
         fileReader.onload = (e) => {
           const bufferArray = e.target.result;
           const wb = XLSX.read(bufferArray, { type: "buffer" });
@@ -25,12 +29,12 @@ function App() {
           reject(error);
         };
 
-      }
-      // } catch(err) {    // well this solves the problem but is definitely not optimal
-      //   console.log(err);
-      // } finally {
-      //   console.log("Something went wrong");
       // }
+      } catch(err) {    // well this works but doesn't solve the problem
+        console.log(err);
+      } finally {
+        console.log("Finally");
+      }
 
 
     });
