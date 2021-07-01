@@ -1,5 +1,5 @@
 Known bug: 
-(file is already uploaded an displayed) > press upload button > hit cancel > app crashes
+(file is already uploaded and displayed in the table) > press upload button > hit cancel > app crashes
 
 
 # Getting Started with Create React App
