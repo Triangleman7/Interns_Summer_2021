@@ -38,7 +38,7 @@ function Sat2() {
                 id='file-upload'
                 type='file'
                 onChange={(e) => {
-                    file = e.target.files[0];
+                    file = e.target.files[1];
                     if (file !== undefined) {
                         readExcel(file);
                     }
