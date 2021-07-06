@@ -1,7 +1,3 @@
-Known bug: 
-(file is already uploaded and displayed in the table) > press upload button > hit cancel > app crashes
-
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

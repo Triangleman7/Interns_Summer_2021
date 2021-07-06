@@ -1,21 +1,18 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 
-
-export var pageNum = 0;
 function Sat1() {
+
     var file;
     const [items, setItems] = useState([]);
-    var count = 0;
 
     const readExcel = (file) => {
-
         const promise = new Promise((resolve, reject) => {
             const fileReader = new FileReader();
             fileReader.readAsArrayBuffer(file);
             fileReader.onload = (e) => {
                 const bufferArray = e.target.result;
-                const wb = XLSX.read(bufferArray, { type: "buffer" });
+                const wb = XLSX.read(bufferArray, { type: 'buffer' });
                 const wsname = wb.SheetNames[0];
                 const ws = wb.Sheets[wsname];
                 const data = XLSX.utils.sheet_to_json(ws);
@@ -35,12 +32,12 @@ function Sat1() {
 
     return (
         <div>
-            <label for="file-upload" class="custom-file-upload">
+            <label for='file-upload' class='custom-file-upload'>
                 Upload Spreadsheet
             </label>
             <input
-                id="file-upload"
-                type="file"
+                id='file-upload'
+                type='file'
                 onChange={(e) => {
                     file = e.target.files[0];
                     if (file !== undefined) {
@@ -50,12 +47,12 @@ function Sat1() {
             />
 
 
-            <table class="table container" id="table">
+            <table class='table container' id='table'>
                 <thead>
                     <tr>
-                        <th scope="col">Message</th>
-                        <th scope="col">Length</th>
-                        <th scope="col">Value</th>
+                        <th scope='col'>Message</th>
+                        <th scope='col'>Length</th>
+                        <th scope='col'>Value</th>
                     </tr>
                 </thead>
                 <tbody>

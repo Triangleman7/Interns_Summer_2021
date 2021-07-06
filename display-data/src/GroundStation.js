@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import * as XLSX from "xlsx";
+import React, { useState } from 'react';
+import * as XLSX from 'xlsx';
 
 
 export var pageNum = 0;
@@ -15,7 +15,7 @@ function GroundStation() {
             fileReader.readAsArrayBuffer(file);
             fileReader.onload = (e) => {
                 const bufferArray = e.target.result;
-                const wb = XLSX.read(bufferArray, { type: "buffer" });
+                const wb = XLSX.read(bufferArray, { type: 'buffer' });
                 const wsname = wb.SheetNames[2];
                 const ws = wb.Sheets[wsname];
                 const data = XLSX.utils.sheet_to_json(ws);
@@ -35,12 +35,12 @@ function GroundStation() {
 
     return (
         <div>
-            <label for="file-upload" class="custom-file-upload">
+            <label for='file-upload' class='custom-file-upload'>
                 Upload Spreadsheet
             </label>
             <input
-                id="file-upload"
-                type="file"
+                id='file-upload'
+                type='file'
                 onChange={(e) => {
                     file = e.target.files[0];
                     if (file !== undefined) {
@@ -52,19 +52,19 @@ function GroundStation() {
                 }}
             />
 
-            <table class="table container" id="table">
+            <table class='table container' id='table'>
                 <thead>
                     <tr>
-                        <th scope="col">LOS to Sat1</th>
-                        <th scope="col">LOS to Sat2</th>
+                        <th scope='col'>LOS to Sat1</th>
+                        <th scope='col'>LOS to Sat2</th>
 
                     </tr>
                 </thead>
                 <tbody>
                     {items.map((d) => (
-                        <tr key={d["LOS to Sat1"]}>
-                            <th>{d["LOS to Sat1"]}</th>
-                            <td>{d["LOS to Sat2"]}</td>
+                        <tr key={d['LOS to Sat1']}>
+                            <th>{d['LOS to Sat1']}</th>
+                            <td>{d['LOS to Sat2']}</td>
 
                         </tr>
                     ))}
