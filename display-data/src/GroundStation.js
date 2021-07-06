@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
 
-
-export var pageNum = 0;
 function GroundStation() {
 
     var file;
     const [items, setItems] = useState([]);
-    var count = 0;
 
     const readExcel = (file) => {
         const promise = new Promise((resolve, reject) => {
@@ -30,8 +27,6 @@ function GroundStation() {
             setItems(d);
         });
     };
-
-
 
     return (
         <div>
@@ -72,7 +67,6 @@ function GroundStation() {
             </table>
         </div>
     );
-
 }
 
 export default GroundStation;

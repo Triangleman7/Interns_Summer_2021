@@ -28,8 +28,6 @@ function Sat1() {
         });
     };
 
-
-
     return (
         <div>
             <label for='file-upload' class='custom-file-upload'>
@@ -45,7 +43,6 @@ function Sat1() {
                     }
                 }}
             />
-
 
             <table class='table container' id='table'>
                 <thead>
@@ -67,7 +64,6 @@ function Sat1() {
             </table>
         </div>
     );
-
 }
 
 export default Sat1;
