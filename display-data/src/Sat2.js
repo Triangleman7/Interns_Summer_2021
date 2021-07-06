@@ -13,7 +13,7 @@ function Sat2() {
             fileReader.onload = (e) => {
                 const bufferArray = e.target.result;
                 const wb = XLSX.read(bufferArray, { type: 'buffer' });
-                const wsname = wb.SheetNames[0];
+                const wsname = wb.SheetNames[1];
                 const ws = wb.Sheets[wsname];
                 const data = XLSX.utils.sheet_to_json(ws);
                 resolve(data);
@@ -38,7 +38,7 @@ function Sat2() {
                 id='file-upload'
                 type='file'
                 onChange={(e) => {
-                    file = e.target.files[1];
+                    file = e.target.files[0];
                     if (file !== undefined) {
                         readExcel(file);
                     }
