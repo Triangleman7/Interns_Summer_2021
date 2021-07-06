@@ -84,3 +84,7 @@
 input[type="file"] {
   display: none;
 }
+
+h1 {
+  margin: 15px;
+}

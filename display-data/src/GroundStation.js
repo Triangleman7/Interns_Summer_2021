@@ -30,6 +30,7 @@ function GroundStation() {
 
     return (
         <div>
+            <h1>Ground Station</h1>
             <label for='file-upload' class='custom-file-upload'>
                 Upload Spreadsheet
             </label>

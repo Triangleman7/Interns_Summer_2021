@@ -30,6 +30,7 @@ function Sat1() {
 
     return (
         <div>
+            <h1>Sat1</h1>
             <label for='file-upload' class='custom-file-upload'>
                 Upload Spreadsheet
             </label>

@@ -30,6 +30,7 @@ function Rules() {
 
     return (
         <div>
+            <h1>Rules</h1>
             <label for='file-upload' class='custom-file-upload'>
                 Upload Spreadsheet
             </label>
