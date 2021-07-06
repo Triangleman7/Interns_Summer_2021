@@ -57,11 +57,12 @@
 }
 
 #table tbody tr:last-of-type {
-  border-bottom: 2px solid #009879;
+  border-bottom: 2px solid #333;
 }
 
 #table thead tr {
-  background-color: #009879;
+  background-color: #333;
+  color: white;
 }
 
 /* .input-button {
@@ -78,7 +79,6 @@
   margin: 20px;
   /* top: 50%;
   left: 50%; */
-
 }
 
 input[type="file"] {
