@@ -10,6 +10,9 @@ class Input {
       this.value = "";
       this.time = "";
       this.id = "";
+      this.month = "";
+      this.day = "";
+      this.year = "";
     } else {
       this.satelliteId = request.satelliteId;
       this.message = request.message;
@@ -17,6 +20,9 @@ class Input {
       this.value = request.value;
       this.time = request.time;
       this.id = request.id;
+      this.month = request.month;
+      this.day = request.day;
+      this.year = request.year;
     }
   }
 }
@@ -24,12 +30,13 @@ class Input {
 class GroundStation extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { requestValid: 0 }; // To indicate
+    this.state = { requestValid: 0 };
     this.fileReading = []; // Parsed requests in the file.
     this.maxIndex = 0;     // (Number of requests in the file, opened) - 1  
     this.currIndex = 0;    // current request number under processing
     this.schedule = [];    // accepted requests
     this.request = [];     // current request under processing
+    this.scheduleMap = new Map();   // map of request with date as key
     this.accept = this.accept.bind(this);
     this.reject = this.reject.bind(this);
   };
@@ -54,60 +61,35 @@ class GroundStation extends React.Component {
     if (requestValid) {
       let textt = request.satelliteId + ", " + 
       request.message + ", " + request.length + ", " +
-      request.value + ", " + request.time + ", " + request.id;
+      request.value + ", " + request.time + ", " + request.id
+      + ", " + request.month + "/" + request.day + "/" + request.year;
       document.getElementById("display request").innerHTML = textt;
     } else {
       document.getElementById("display request").innerHTML = "There are no more requests.";
     }
   };
 
-  displaySchedule(schedule) {
-    let textt = '<p>Accepted schedules</p>';
-    
-    textt += '<svg width="1040" height="50">';
-    textt += '<line x1="40" y1="10" x2="1000" y2="10" style="stroke:rgb(255,0,0);stroke-width:2" />';
-    for (let i=0; i<=24; i++) {
-      const x1 = (40+i*40).toString();
-      textt += '<line x1="' + x1 + '" y1="0" x2="' + x1 + '" y2="20" style="stroke:rgb(255,0,0);stroke-width:2" />';
-      textt += '<text x="' + (i*40+35).toString() + '" y="40">' + i.toString() + '</text>';
-    }
-    textt += '</svg>';
- 
-    if (schedule.length)
-    {
-      textt += "<ol>";
-      for (let i = 0; i < schedule.length; i++) {
-        textt += "<li>" + schedule[i].satelliteId + ", " + 
-        schedule[i].message + ", " + schedule[i].length + ", " +
-        schedule[i].value + ", " + schedule[i].time + ", " + schedule[i].id+ "</li>";
-      }
-      textt += "</ol>";
- 
-    }
-    document.getElementById("display schedule").innerHTML = textt;
-  }
-
-
   accept(){
     this.schedule.push(new Input(this.fileReading.requests[this.currIndex]));
-    this.displaySchedule(this.schedule);
+    const date = this.fileReading.requests[this.currIndex].month.toString(10) + this.fileReading.requests[this.currIndex].day.toString(10) + 
+      this.fileReading.requests[this.currIndex].year.toString(10);
 
-    if (this.currIndex === this.maxIndex) {
-      const request = new Input("");
-      this.currIndex = 0;
-      this.displayRequest(0, this.request);
-      this.setState({requestValid: 0});
+    if (this.scheduleMap.get(date) == null) {
+      var dummyArray = [];
+      dummyArray[0] = this.fileReading.requests[this.currIndex];
+      this.scheduleMap.set(date, dummyArray);
     } else {
-      this.currIndex = this.currIndex + 1;
-      const request = new Input(this.fileReading.requests[this.currIndex]);
-      this.displayRequest(1, this.request);
+      var dummyArray = this.scheduleMap.get(date);
+      dummyArray[dummyArray.length] = this.fileReading.requests[this.currIndex];
+      this.scheduleMap.set(date, dummyArray);
     }
-  };
 
-  reject() {
+    this.displaySchedule(this.schedule);
+    this.createTable(this.fileReading.requests[this.currIndex].month, this.fileReading.requests[this.currIndex].day, this.fileReading.requests[this.currIndex].year);
+
     if (this.currIndex === this.maxIndex) {
-      const request = new Input("");
       this.currIndex = 0;
+      const request = new Input("");
       this.displayRequest(0, this.request);
       this.setState({requestValid: 0});
     } else {
@@ -116,6 +98,111 @@ class GroundStation extends React.Component {
       this.displayRequest(1, this.request);
     }
   };
+
+  reject() {
+    if (this.currIndex === this.maxIndex) {
+      this.currIndex = 0;
+      this.request = new Input("");
+      this.displayRequest(0, this.request);
+      this.setState({requestValid: 0});
+    } else {
+      this.currIndex = this.currIndex + 1;
+      this.request = new Input(this.fileReading.requests[this.currIndex]);
+      this.displayRequest(1, this.request);
+    }
+  };
+
+  createTable(month, day, year) {
+    var myTableDiv = document.getElementById('myDynamicTable');
+    var myTableDivHeader = document.getElementById('myDynamicTableHeader');
+    const date = this.fileReading.requests[this.currIndex].month.toString(10) + this.fileReading.requests[this.currIndex].day.toString(10)
+      + this.fileReading.requests[this.currIndex].year.toString(10);
+
+    //clear previous table
+    myTableDiv.innerHTML = '';
+    myTableDivHeader.innerHTML = month + '/' + day + '/' + year;
+
+    var table = document.createElement('TABLE');
+    table.border = '1';
+    var tableBody = document.createElement('TBODY');
+    table.appendChild(tableBody);
+    var tr = document.createElement('TR');
+    tableBody.appendChild(tr);
+
+    //time
+    var td = document.createElement('TD');
+    td.width = '75';
+    td.appendChild(document.createTextNode('Time'));
+    tr.appendChild(td);
+
+    //sat 1
+    var td = document.createElement('TD');
+    td.width = '75';
+    td.appendChild(document.createTextNode('Sat 1'));
+    tr.appendChild(td);
+
+    //sat 2
+    var td = document.createElement('TD');
+    td.width = '75';
+    td.appendChild(document.createTextNode('Sat 2'));
+    tr.appendChild(td);
+
+    for (var i=0; i<24; i++) {
+      for (var j=0; j<4; j++) {
+        var tr = document.createElement('TR');
+        tableBody.appendChild(tr);
+  
+        //time
+        var td = document.createElement('TD');
+        td.width = '75';
+        td.appendChild (document.createTextNode(i + ":" + j*15));
+        tr.appendChild(td);
+  
+        //sat 1
+        var td = document.createElement('TD');
+        td.width = '75';
+        td.appendChild(document.createTextNode(' '));
+        tr.appendChild(td);
+  
+        //sat 2
+        var td = document.createElement('TD');
+        td.width = '75'; 
+        td.appendChild(document.createTextNode(' '));
+        tr.appendChild(td);  
+      }
+    }
+    myTableDiv.appendChild(table);
+
+    for (var i=0; i<this.scheduleMap.get(date).length; i++) {
+      const arr = this.scheduleMap.get(date)[i].length.split(" ");
+      var len = parseInt(arr[0]);
+      for (var j=0; j<Math.ceil(len/15); j++) {
+        const cellInTable = tableBody.childNodes[parseInt(this.scheduleMap.get(date)[i].time)*4+1+j].childNodes[this.scheduleMap.get(date)[i].id];
+        var entry = document.createElement('TD');
+        entry.width = '75';
+        entry.appendChild(document.createTextNode(this.scheduleMap.get(date)[i].message));
+        cellInTable.replaceWith(entry);
+      }
+    }
+  }
+
+  displaySchedule(schedule) {
+    let textt = '<p>Accepted schedules</p>';
+ 
+    if (schedule.length)
+    {
+      textt += "<ol>";
+      for (let i = 0; i < schedule.length; i++) {
+        textt += "<li>" + schedule[i].satelliteId + ", " + 
+        schedule[i].message + ", " + schedule[i].length + ", " +
+        schedule[i].value + ", " + schedule[i].time + ", " + schedule[i].id + 
+        ", " + schedule[i].month + "/" + schedule[i].day + "/" + schedule[i].year + "</li>";
+      }
+      textt += "</ol>";
+ 
+    }
+    document.getElementById("display schedule").innerHTML = textt;
+  }
 
   render() {
     return (
@@ -126,7 +213,8 @@ class GroundStation extends React.Component {
           <button disabled={!this.state.requestValid} className="btn btn-success" onClick={this.accept}>Accept</button>
           <button disabled={!this.state.requestValid} className="btn btn-success" onClick={this.reject}>Reject</button>
         </div>
-        <p></p>
+        <div id="myDynamicTableHeader"></div>
+        <div id="myDynamicTable"></div>
         <div><p id="display schedule"></p></div>
       </div>
     );
