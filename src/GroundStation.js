@@ -113,14 +113,14 @@ class GroundStation extends React.Component {
   };
 
   createTable(month, day, year) {
-    var myTableDiv = document.getElementById('myDynamicTable');
-    var myTableDivHeader = document.getElementById('myDynamicTableHeader');
+    var timeline = document.getElementById('timeline');
+    var timelineHeader = document.getElementById('timelineHeader');
     const date = this.fileReading.requests[this.currIndex].month.toString(10) + this.fileReading.requests[this.currIndex].day.toString(10)
       + this.fileReading.requests[this.currIndex].year.toString(10);
 
     //clear previous table
-    myTableDiv.innerHTML = '';
-    myTableDivHeader.innerHTML = month + '/' + day + '/' + year;
+    timeline.innerHTML = '';
+    timelineHeader.innerHTML = month + '/' + day + '/' + year;
 
     var table = document.createElement('TABLE');
     table.border = '1';
@@ -155,7 +155,7 @@ class GroundStation extends React.Component {
         //time
         var td = document.createElement('TD');
         td.width = '75';
-        td.appendChild (document.createTextNode(i + ":" + j*15));
+        td.appendChild (document.createTextNode(this.displayTime(i, j)));
         tr.appendChild(td);
   
         //sat 1
@@ -171,19 +171,35 @@ class GroundStation extends React.Component {
         tr.appendChild(td);  
       }
     }
-    myTableDiv.appendChild(table);
+    timeline.appendChild(table);
 
     for (var i=0; i<this.scheduleMap.get(date).length; i++) {
       const arr = this.scheduleMap.get(date)[i].length.split(" ");
       var len = parseInt(arr[0]);
       for (var j=0; j<Math.ceil(len/15); j++) {
-        const cellInTable = tableBody.childNodes[parseInt(this.scheduleMap.get(date)[i].time)*4+1+j].childNodes[this.scheduleMap.get(date)[i].id];
+        var sat = 1;
+        if (this.scheduleMap.get(date)[i].satelliteId=='sat2') {
+          sat = 2;
+        }  
+        const cellInTable = tableBody.childNodes[parseInt(this.scheduleMap.get(date)[i].time)*4+1+j].childNodes[sat];
         var entry = document.createElement('TD');
         entry.width = '75';
         entry.appendChild(document.createTextNode(this.scheduleMap.get(date)[i].message));
         cellInTable.replaceWith(entry);
       }
     }
+  }
+
+  displayTime(hour, min) {
+    var rHour = hour.toString();
+    if (hour < 10) {
+      rHour = "0" + rHour;
+    } 
+    var rMin = (min*15).toString();
+    if (min < 1) {
+      rMin = "0" + rMin;
+    }
+    return rHour + rMin;
   }
 
   displaySchedule(schedule) {
@@ -213,8 +229,8 @@ class GroundStation extends React.Component {
           <button disabled={!this.state.requestValid} className="btn btn-success" onClick={this.accept}>Accept</button>
           <button disabled={!this.state.requestValid} className="btn btn-success" onClick={this.reject}>Reject</button>
         </div>
-        <div id="myDynamicTableHeader"></div>
-        <div id="myDynamicTable"></div>
+        <div id="timeline"></div>
+        <div id="timelineHeader"></div>
         <div><p id="display schedule"></p></div>
       </div>
     );
