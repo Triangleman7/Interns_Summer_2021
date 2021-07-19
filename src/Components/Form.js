@@ -310,7 +310,19 @@ class Form extends React.Component {
                         message: '',
                         length: '',
                         value: '',
-                        date: ''
+                        date: '',
+                        day: '',
+                        month: '',
+                        year: '',
+                        hours: '',
+                        minutes: '',
+                        UTCDay: '',
+                        UTCMonth: '',
+                        UTCYear: '',
+                        UTCHours: '',
+                        UTCMinutes: '',
+                        dateTime: '',
+                        isPending: ''
                     });
                 }}>
                     Reset
