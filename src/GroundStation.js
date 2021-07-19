@@ -8,21 +8,25 @@ class Input {
       this.message = "";
       this.length = "";
       this.value = "";
-      this.time = "";
       this.id = "";
       this.month = "";
       this.day = "";
       this.year = "";
+      this.minutes = "";
+      this.hours = "";
+      this.category = "";
     } else {
       this.satelliteId = request.satelliteId;
       this.message = request.message;
       this.length = request.length;
       this.value = request.value;
-      this.time = request.time;
       this.id = request.id;
       this.month = request.month;
       this.day = request.day;
       this.year = request.year;
+      this.minutes = request.minutes;
+      this.hours = request.hours;
+      this.category = request.category;
     }
   }
 }
@@ -181,7 +185,7 @@ class GroundStation extends React.Component {
         if (this.scheduleMap.get(date)[i].satelliteId=='sat2') {
           sat = 2;
         }  
-        const cellInTable = tableBody.childNodes[parseInt(this.scheduleMap.get(date)[i].time)*4+1+j].childNodes[sat];
+        const cellInTable = tableBody.childNodes[parseInt(this.scheduleMap.get(date)[i].hours)*4+parseInt(this.scheduleMap.get(date)[i].minutes)+1+j].childNodes[sat];
         var entry = document.createElement('TD');
         entry.width = '75';
         entry.appendChild(document.createTextNode(this.scheduleMap.get(date)[i].message));
