@@ -66,7 +66,7 @@ class Form extends React.Component {
             }
         }
 
-        if (event.target.name === 'category' && event.target.value === 'TV movie') {
+        if (event.target.name === 'category' && event.target.value === 'TV Movie') {
             if (this.state.satelliteId === 'Sat1') {
                 this.setState({
                     length: '60 min',
