@@ -65,7 +65,7 @@ class GroundStation extends React.Component {
     if (requestValid) {
       let textt = request.satelliteId + ", " + 
       request.message + ", " + request.length + ", " +
-      request.value + ", " + request.time + ", " + request.id
+      request.value + ", " + this.displayTime(request.hours, request.minutes) + ", " + request.id
       + ", " + request.month + "/" + request.day + "/" + request.year;
       document.getElementById("display request").innerHTML = textt;
     } else {
