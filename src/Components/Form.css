@@ -1,0 +1,64 @@
+.submit-fields {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.submit-fields label {
+  text-align: left;
+  display: block;
+}
+
+.not-date-picker {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  display: block;
+}
+
+input {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  display: block;
+}
+
+/* .time-div select,
+.time-div p {
+  display: inline-block;
+  padding: 6px 10px;
+  margin: 10px;
+  box-sizing: border-box;
+}
+
+.time-div select {
+  border: 1px solid #ddd;
+}
+
+#time-hours,
+#time-minutes,
+.time-div p {
+  margin: 10px 0;
+} */
+
+.submit-fields button {
+  background: #696969;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+textarea {
+  resize: none;
+}
+
+#date-picker {
+  width: 100%;
+  float: left;
+}

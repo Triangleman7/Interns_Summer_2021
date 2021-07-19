@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+ul {
+  list-style-type: none;
+}
+
+input {
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+input[type="text"]:focus {
+  border: 3px solid #555;
+}
+
+button {
+  margin-left: 25px;
+}
