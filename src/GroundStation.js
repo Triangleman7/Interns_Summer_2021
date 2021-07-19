@@ -159,7 +159,7 @@ class GroundStation extends React.Component {
         //time
         var td = document.createElement('TD');
         td.width = '75';
-        td.appendChild (document.createTextNode(this.displayTime(i, j)));
+        td.appendChild (document.createTextNode(this.displayTime(i, j*15)));
         tr.appendChild(td);
   
         //sat 1
@@ -185,7 +185,7 @@ class GroundStation extends React.Component {
         if (this.scheduleMap.get(date)[i].satelliteId=='sat2') {
           sat = 2;
         }  
-        const cellInTable = tableBody.childNodes[parseInt(this.scheduleMap.get(date)[i].hours)*4+parseInt(this.scheduleMap.get(date)[i].minutes)+1+j].childNodes[sat];
+        const cellInTable = tableBody.childNodes[parseInt(this.scheduleMap.get(date)[i].hours)*4+Math.floor(parseInt(this.scheduleMap.get(date)[i].minutes)/15)+1+j].childNodes[sat];
         var entry = document.createElement('TD');
         entry.width = '75';
         entry.appendChild(document.createTextNode(this.scheduleMap.get(date)[i].message));
@@ -199,8 +199,8 @@ class GroundStation extends React.Component {
     if (hour < 10) {
       rHour = "0" + rHour;
     } 
-    var rMin = (min*15).toString();
-    if (min < 1) {
+    var rMin = (min).toString();
+    if (min < 15) {
       rMin = "0" + rMin;
     }
     return rHour + rMin;
