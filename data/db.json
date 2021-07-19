@@ -295,6 +295,19 @@
       "UTCHours": 7,
       "UTCMinutes": 0,
       "id": 23
+    },
+    {
+      "satelliteId": "Sat1",
+      "category": "Commercial",
+      "message": "gs",
+      "length": "30 min",
+      "value": "100",
+      "UTCDay": 22,
+      "UTCMonth": 7,
+      "UTCYear": 2021,
+      "UTCHours": 23,
+      "UTCMinutes": 30,
+      "id": 24
     }
   ]
 }
