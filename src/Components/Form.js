@@ -17,11 +17,6 @@ class Form extends React.Component {
         year: '',
         hours: '',
         minutes: '',
-        // UTCDay: '',
-        // UTCMonth: '',
-        // UTCYear: '',
-        // UTCHours: '',
-        // UTCMinutes: '',
         dateTime: '',
         isPending: ''
     };
@@ -193,12 +188,6 @@ class Form extends React.Component {
             year: event.getFullYear(),
             hours: event.getHours(),
             minutes: event.getMinutes(),
-
-            // UTCDay: event.getUTCDate(),
-            // UTCMonth: event.getUTCMonth() + 1,
-            // UTCYear: event.getUTCFullYear(),
-            // UTCHours: event.getUTCHours(),
-            // UTCMinutes: event.getUTCMinutes(),
         });
     }
 
@@ -210,11 +199,6 @@ class Form extends React.Component {
         var message = this.state.message;
         var length = this.state.length;
         var value = this.state.value;
-        // var UTCDay = this.state.UTCDay;
-        // var UTCMonth = this.state.UTCMonth;
-        // var UTCYear = this.state.UTCYear;
-        // var UTCHours = this.state.UTCHours;
-        // var UTCMinutes = this.state.UTCMinutes;
         var day = this.state.day;
         var month = this.state.month;
         var year = this.state.year;
@@ -321,16 +305,10 @@ class Form extends React.Component {
                         year: '',
                         hours: '',
                         minutes: '',
-                        // UTCDay: '',
-                        // UTCMonth: '',
-                        // UTCYear: '',
-                        // UTCHours: '',
-                        // UTCMinutes: '',
                         dateTime: '',
                         isPending: ''
                     });
                 }}
-                // className='submit-button'
                 >
                     Reset
                 </button>
