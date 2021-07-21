@@ -17,11 +17,11 @@ class Form extends React.Component {
         year: '',
         hours: '',
         minutes: '',
-        UTCDay: '',
-        UTCMonth: '',
-        UTCYear: '',
-        UTCHours: '',
-        UTCMinutes: '',
+        // UTCDay: '',
+        // UTCMonth: '',
+        // UTCYear: '',
+        // UTCHours: '',
+        // UTCMinutes: '',
         dateTime: '',
         isPending: ''
     };
@@ -194,11 +194,11 @@ class Form extends React.Component {
             hours: event.getHours(),
             minutes: event.getMinutes(),
 
-            UTCDay: event.getUTCDate(),
-            UTCMonth: event.getUTCMonth() + 1,
-            UTCYear: event.getUTCFullYear(),
-            UTCHours: event.getUTCHours(),
-            UTCMinutes: event.getUTCMinutes(),
+            // UTCDay: event.getUTCDate(),
+            // UTCMonth: event.getUTCMonth() + 1,
+            // UTCYear: event.getUTCFullYear(),
+            // UTCHours: event.getUTCHours(),
+            // UTCMinutes: event.getUTCMinutes(),
         });
     }
 
@@ -210,13 +210,18 @@ class Form extends React.Component {
         var message = this.state.message;
         var length = this.state.length;
         var value = this.state.value;
-        var UTCDay = this.state.UTCDay;
-        var UTCMonth = this.state.UTCMonth;
-        var UTCYear = this.state.UTCYear;
-        var UTCHours = this.state.UTCHours;
-        var UTCMinutes = this.state.UTCMinutes;
+        // var UTCDay = this.state.UTCDay;
+        // var UTCMonth = this.state.UTCMonth;
+        // var UTCYear = this.state.UTCYear;
+        // var UTCHours = this.state.UTCHours;
+        // var UTCMinutes = this.state.UTCMinutes;
+        var day = this.state.day;
+        var month = this.state.month;
+        var year = this.state.year;
+        var hours = this.state.hours;
+        var minutes = this.state.minutes;
 
-        const log = { satelliteId, category, message, length, value, UTCDay, UTCMonth, UTCYear, UTCHours, UTCMinutes };
+        const log = { satelliteId, category, message, length, value, day, month, year, hours, minutes };
 
         this.setState({
             isPending: 'true'
@@ -299,7 +304,7 @@ class Form extends React.Component {
                         showYearDropdown
                         scrollableYearDropdown
                     />
-                    { !this.state.isPending && <button type='submit'>Submit</button>}
+                    { !this.state.isPending && <button type='submit' className='submit-button'>Submit</button>}
                     { this.state.isPending && <button disabled>Adding request</button>}
                 </form>
                 <button onClick={(event) => {
@@ -316,15 +321,17 @@ class Form extends React.Component {
                         year: '',
                         hours: '',
                         minutes: '',
-                        UTCDay: '',
-                        UTCMonth: '',
-                        UTCYear: '',
-                        UTCHours: '',
-                        UTCMinutes: '',
+                        // UTCDay: '',
+                        // UTCMonth: '',
+                        // UTCYear: '',
+                        // UTCHours: '',
+                        // UTCMinutes: '',
                         dateTime: '',
                         isPending: ''
                     });
-                }}>
+                }}
+                // className='submit-button'
+                >
                     Reset
                 </button>
             </div>
