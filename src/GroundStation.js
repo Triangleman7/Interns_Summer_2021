@@ -1,6 +1,6 @@
 import React from "react";
 //import Flexbox from 'flexbox-react';
-
+ 
 class Input {
   constructor(request) {
     if (request === "") {
@@ -30,7 +30,7 @@ class Input {
     }
   }
 }
-
+ 
 class GroundStation extends React.Component {
   constructor(props) {
     super(props);
@@ -44,12 +44,13 @@ class GroundStation extends React.Component {
     this.accept = this.accept.bind(this);
     this.reject = this.reject.bind(this);
   };
-
+ 
   showFile = async (e) => {
     e.preventDefault()
     const reader = new FileReader()
     reader.onload = async (e) => { 
       const text = (e.target.result);
+      console.log(this);
       this.fileReading = JSON.parse(text);
       this.maxIndex = this.fileReading.requests.length-1;
       this.request = new Input(this.fileReading.requests[0]);
@@ -60,7 +61,10 @@ class GroundStation extends React.Component {
     };
     reader.readAsText(e.target.files[0]);
   };
-
+ 
+  
+ 
+ 
   displayRequest(requestValid, request) {
     if (requestValid) {
       let textt = request.satelliteId + ", " + 
@@ -72,12 +76,12 @@ class GroundStation extends React.Component {
       document.getElementById("display request").innerHTML = "There are no more requests.";
     }
   };
-
+ 
   accept(){
     this.schedule.push(new Input(this.fileReading.requests[this.currIndex]));
     const date = this.fileReading.requests[this.currIndex].month.toString(10) + this.fileReading.requests[this.currIndex].day.toString(10) + 
       this.fileReading.requests[this.currIndex].year.toString(10);
-
+ 
     if (this.scheduleMap.get(date) == null) {
       var dummyArray = [];
       dummyArray[0] = this.fileReading.requests[this.currIndex];
@@ -87,10 +91,10 @@ class GroundStation extends React.Component {
       dummyArray[dummyArray.length] = this.fileReading.requests[this.currIndex];
       this.scheduleMap.set(date, dummyArray);
     }
-
+ 
     this.displaySchedule(this.schedule);
     this.createTable(this.fileReading.requests[this.currIndex].month, this.fileReading.requests[this.currIndex].day, this.fileReading.requests[this.currIndex].year);
-
+ 
     if (this.currIndex === this.maxIndex) {
       this.currIndex = 0;
       const request = new Input("");
@@ -102,7 +106,7 @@ class GroundStation extends React.Component {
       this.displayRequest(1, this.request);
     }
   };
-
+ 
   reject() {
     if (this.currIndex === this.maxIndex) {
       this.currIndex = 0;
@@ -115,42 +119,42 @@ class GroundStation extends React.Component {
       this.displayRequest(1, this.request);
     }
   };
-
+ 
   createTable(month, day, year) {
     var timeline = document.getElementById('timeline');
     var timelineHeader = document.getElementById('timelineHeader');
     const date = this.fileReading.requests[this.currIndex].month.toString(10) + this.fileReading.requests[this.currIndex].day.toString(10)
       + this.fileReading.requests[this.currIndex].year.toString(10);
-
+ 
     //clear previous table
     timeline.innerHTML = '';
     timelineHeader.innerHTML = month + '/' + day + '/' + year;
-
+ 
     var table = document.createElement('TABLE');
     table.border = '1';
     var tableBody = document.createElement('TBODY');
     table.appendChild(tableBody);
     var tr = document.createElement('TR');
     tableBody.appendChild(tr);
-
+ 
     //time
     var td = document.createElement('TD');
     td.width = '75';
     td.appendChild(document.createTextNode('Time'));
     tr.appendChild(td);
-
+ 
     //sat 1
     var td = document.createElement('TD');
     td.width = '75';
     td.appendChild(document.createTextNode('Sat 1'));
     tr.appendChild(td);
-
+ 
     //sat 2
     var td = document.createElement('TD');
     td.width = '75';
     td.appendChild(document.createTextNode('Sat 2'));
     tr.appendChild(td);
-
+ 
     for (var i=0; i<24; i++) {
       for (var j=0; j<4; j++) {
         var tr = document.createElement('TR');
@@ -176,7 +180,7 @@ class GroundStation extends React.Component {
       }
     }
     timeline.appendChild(table);
-
+ 
     for (var i=0; i<this.scheduleMap.get(date).length; i++) {
       const arr = this.scheduleMap.get(date)[i].length.split(" ");
       var len = parseInt(arr[0]);
@@ -193,7 +197,7 @@ class GroundStation extends React.Component {
       }
     }
   }
-
+ 
   displayTime(hour, min) {
     var rHour = hour.toString();
     if (hour < 10) {
@@ -205,7 +209,7 @@ class GroundStation extends React.Component {
     }
     return rHour + rMin;
   }
-
+ 
   displaySchedule(schedule) {
     let textt = '<p>Accepted schedules</p>';
  
@@ -223,11 +227,35 @@ class GroundStation extends React.Component {
     }
     document.getElementById("display schedule").innerHTML = textt;
   }
-
+ 
+  getInfoFromServer = async (e) => {
+    let request = new XMLHttpRequest();
+    request.open('GET', 'http://localhost:8000/');
+    request.responseType = 'text';
+ 
+    request.onload = async () => {
+      console.log(this);
+      console.log(request.responseText);
+      this.fileReading = JSON.parse(request.responseText);
+      this.maxIndex = this.fileReading.requests.length-1;
+      this.request = new Input(this.fileReading.requests[0]);
+      const requestValid = 1;
+      this.setState({requestValid: requestValid});
+      this.displayRequest(requestValid, this.request);
+      this.displaySchedule(this.schedule);
+    };
+    request.send();
+  }
+ 
+ 
+  
   render() {
     return (
       <div>
-        <div> <input type="file" accept=".json" onChange={(e) => this.showFile(e)} onClick={(e) => (e.target.value = null)} /> </div>
+        <div> 
+          <input type="file" accept=".json" onChange={(e) => this.showFile(e)} onClick={(e) => (e.target.value = null)} />
+          <button onClick={(e) => this.getInfoFromServer(e)}>Get from server</button>
+        </div>
         <div><p id="display request"></p></div>
         <div>
           <button disabled={!this.state.requestValid} className="btn btn-success" onClick={this.accept}>Accept</button>
@@ -240,5 +268,5 @@ class GroundStation extends React.Component {
     );
   };
 };
-
+ 
 export default GroundStation;
