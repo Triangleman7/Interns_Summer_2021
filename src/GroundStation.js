@@ -1,4 +1,5 @@
 import React from "react";
+import './GroundStation.css';
 //import Flexbox from 'flexbox-react';
  
 class Input {
