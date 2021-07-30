@@ -7,3 +7,16 @@ button {
   cursor: pointer;
   margin: 5px;
 }
+
+table {
+  border: 10px solid #696969;
+  margin: 0 auto 0 auto;
+  background-color: #696969;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+td {
+  border: 5px solid purple;
+  background-color: white;
+}
