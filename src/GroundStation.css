@@ -17,6 +17,17 @@ table {
 }
 
 td {
-  border: 5px solid purple;
+  border: 5px solid #696969;
   background-color: white;
+}
+
+.server-button {
+  margin: 10px auto;
+}
+
+/* .my-btn {
+} */
+
+.my-btn-div {
+  text-align: center;
 }

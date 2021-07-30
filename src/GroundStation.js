@@ -255,12 +255,12 @@ class GroundStation extends React.Component {
       <div>
         <div> 
           <input type="file" accept=".json" onChange={(e) => this.showFile(e)} onClick={(e) => (e.target.value = null)} />
-          <button onClick={(e) => this.getInfoFromServer(e)}>Get from server</button>
+          <button onClick={(e) => this.getInfoFromServer(e)} className='server-button'>Get from server</button>
         </div>
         <div><p id="display request"></p></div>
-        <div>
-          <button disabled={!this.state.requestValid} className="btn btn-success" onClick={this.accept}>Accept</button>
-          <button disabled={!this.state.requestValid} className="btn btn-success" onClick={this.reject}>Reject</button>
+        <div className='my-btn-div'>
+          <button disabled={!this.state.requestValid} className="btn btn-success my-btn" onClick={this.accept}>Accept</button>
+          <button disabled={!this.state.requestValid} className="btn btn-success my-btn" onClick={this.reject}>Reject</button>
         </div>
         <div id="timeline"></div>
         <div id="timelineHeader"></div>
