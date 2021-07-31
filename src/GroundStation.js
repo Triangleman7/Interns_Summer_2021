@@ -2,7 +2,6 @@ import React from "react";
 import './GroundStation.css';
 //import Flexbox from 'flexbox-react';
  
-var isRequest=false;
 
 
 class Input{
@@ -38,7 +37,10 @@ class Input{
 class GroundStation extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { requestValid: 0 };
+    this.state = { 
+      requestValid: 0,
+      isRequestThere: false
+    };
     this.fileReading = []; // Parsed requests in the file.
     this.maxIndex = 0;     // (Number of requests in the file, opened) - 1  
     this.currIndex = 0;    // current request number under processing
@@ -48,6 +50,10 @@ class GroundStation extends React.Component {
     this.accept = this.accept.bind(this);
     this.reject = this.reject.bind(this);
   };
+
+  // state = {
+  //   isRequestThere: true
+  // };
  
   showFile = async (e) => {
     e.preventDefault()
@@ -66,21 +72,20 @@ class GroundStation extends React.Component {
     reader.readAsText(e.target.files[0]);
   };
  
-  
- 
- 
   displayRequest(requestValid, request) {
     if (requestValid) {
-      console.log(isRequest);
-      isRequest=true;
-      console.log(isRequest);
+      this.setState({
+        isRequestThere: true
+      });
       let textt = request.id + ". "
       + "[ Satellite ID: " + request.satelliteId + " \r\n] [ Message: " + 
       request.message + " ] [ Length: " + request.length + " ] [ Value: " +
       request.value + " ] [ Time: " + this.displayTime(request.hours, request.minutes) +  " ] [ Date: " + request.month + "/" + request.day + "/" + request.year + " ]";
       document.getElementById("display request").innerHTML = "<span class='textt'>"+textt+"</span>";
     } else {
-      isRequest=false;
+      this.setState({
+        isRequestThere: false
+      });
       document.getElementById("display request").innerHTML = "<span class='textt'>There are no more requests.</span>";
     }
   };
@@ -255,8 +260,6 @@ class GroundStation extends React.Component {
     };
     request.send();
   }
- 
- 
   
   render() {
     return (
@@ -280,8 +283,8 @@ class GroundStation extends React.Component {
         </div>
         <div><p id="display request"></p></div>
         <div className='my-btn-div'>
-          <button disabled={!this.state.requestValid} className="btn btn-success my-btn" id='accept' onClick={this.accept}>Accept</button>
-          <button disabled={!this.state.requestValid} className="btn btn-success my-btn" onClick={this.reject}>Reject</button>
+          {this.state.isRequestThere && <button disabled={!this.state.requestValid} className="btn btn-success my-btn" id='accept' onClick={this.accept}>Accept</button>}
+          {this.state.isRequestThere && <button disabled={!this.state.requestValid} className="btn btn-success my-btn" onClick={this.reject}>Reject</button>}
         </div>
         <div id="timeline"></div>
         <div id="timelineHeader"></div>

@@ -50,8 +50,7 @@ input[type="file"] {
 }
 
 .textt,
-p
-/* .date  */ {
+p {
   margin: 20px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
