@@ -2,9 +2,11 @@ import React from "react";
 import './GroundStation.css';
 //import Flexbox from 'flexbox-react';
  
-class Input {
+var isRequest=false;
+
+
+class Input{
   constructor(request) {
-    
     if (request === "") {
       this.satelliteId = "";
       this.message = "";
@@ -69,14 +71,16 @@ class GroundStation extends React.Component {
  
   displayRequest(requestValid, request) {
     if (requestValid) {
-      this.isRequest=true;
+      console.log(isRequest);
+      isRequest=true;
+      console.log(isRequest);
       let textt = request.id + ". "
       + "[ Satellite ID: " + request.satelliteId + " \r\n] [ Message: " + 
-      request.message + " ] [ Time: " + request.length + " ] [ Value: " +
+      request.message + " ] [ Length: " + request.length + " ] [ Value: " +
       request.value + " ] [ Time: " + this.displayTime(request.hours, request.minutes) +  " ] [ Date: " + request.month + "/" + request.day + "/" + request.year + " ]";
       document.getElementById("display request").innerHTML = "<span class='textt'>"+textt+"</span>";
     } else {
-      this.isRequest=false;
+      isRequest=false;
       document.getElementById("display request").innerHTML = "<span class='textt'>There are no more requests.</span>";
     }
   };
@@ -130,9 +134,11 @@ class GroundStation extends React.Component {
     const date = this.fileReading.requests[this.currIndex].month.toString(10) + this.fileReading.requests[this.currIndex].day.toString(10)
       + this.fileReading.requests[this.currIndex].year.toString(10);
  
+    var tDate = month + '/' + day + '/' + year;
+
     //clear previous table
     timeline.innerHTML = '';
-    timelineHeader.innerHTML = month + '/' + day + '/' + year;
+    timelineHeader.innerHTML = "<span class='date'>" + tDate + "</span>";
  
     var table = document.createElement('TABLE');
     table.border = '1';
@@ -221,14 +227,20 @@ class GroundStation extends React.Component {
     {
       textt += "<ol>";
       for (let i = 0; i < schedule.length; i++) {
-        textt += "<li>" + schedule[i].satelliteId + ", " + 
-        schedule[i].message + ", " + schedule[i].length + ", " +
-        schedule[i].value + ", " + schedule[i].time + ", " + schedule[i].id + 
-        ", " + schedule[i].month + "/" + schedule[i].day + "/" + schedule[i].year + "</li>";
+        textt += "<li>" + "[ Satellite ID: " +  schedule[i].satelliteId + 
+        " ] [ Message: " + schedule[i].message + " ] [ Length: " +  schedule[i].length + " ] [ Value: " +
+        schedule[i].value + " ] [ Time: " + schedule[i].time + ", " +  
+        " ] [ Date: " + schedule[i].month + "/" + schedule[i].day + "/" + schedule[i].year + " ] "+ "</li>";
       }
       textt += "</ol>";
  
     }
+
+// "[ Satellite ID: " + request.satelliteId + " ] [ Message: " + 
+// request.message + " ] [ Time: " + request.length + " ] [ Value: " +
+// request.value + " ] [ Time: " + this.displayTime(request.hours, request.minutes) +  " ] [ Date: " + request.month + "/" + request.day + "/" + request.year + " ]"
+
+
     document.getElementById("display schedule").innerHTML = textt;
   }
  
@@ -276,7 +288,7 @@ class GroundStation extends React.Component {
         </div>
         <div><p id="display request"></p></div>
         <div className='my-btn-div'>
-          {this.isRequest && <button disabled={!this.state.requestValid} className="btn btn-success my-btn" id='accept' onClick={this.accept}>Accept</button>}
+          <button disabled={!this.state.requestValid} className="btn btn-success my-btn" id='accept' onClick={this.accept}>Accept</button>
           <button disabled={!this.state.requestValid} className="btn btn-success my-btn" onClick={this.reject}>Reject</button>
         </div>
         <div id="timeline"></div>

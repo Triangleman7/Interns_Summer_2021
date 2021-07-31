@@ -49,9 +49,16 @@ input[type="file"] {
   display: none;
 }
 
-.textt {
+.textt,
+p
+/* .date  */ {
   margin: 20px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.date {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: 40px;
 }
 
 .file {
