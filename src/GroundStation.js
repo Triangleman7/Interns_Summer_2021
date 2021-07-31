@@ -4,6 +4,7 @@ import './GroundStation.css';
  
 class Input {
   constructor(request) {
+    
     if (request === "") {
       this.satelliteId = "";
       this.message = "";
@@ -68,13 +69,15 @@ class GroundStation extends React.Component {
  
   displayRequest(requestValid, request) {
     if (requestValid) {
-      let textt = request.satelliteId + ", " + 
-      request.message + ", " + request.length + ", " +
-      request.value + ", " + this.displayTime(request.hours, request.minutes) + ", " + request.id
-      + ", " + request.month + "/" + request.day + "/" + request.year;
-      document.getElementById("display request").innerHTML = textt;
+      this.isRequest=true;
+      let textt = request.id + ". "
+      + "[ Satellite ID: " + request.satelliteId + " \r\n] [ Message: " + 
+      request.message + " ] [ Time: " + request.length + " ] [ Value: " +
+      request.value + " ] [ Time: " + this.displayTime(request.hours, request.minutes) +  " ] [ Date: " + request.month + "/" + request.day + "/" + request.year + " ]";
+      document.getElementById("display request").innerHTML = "<span class='textt'>"+textt+"</span>";
     } else {
-      document.getElementById("display request").innerHTML = "There are no more requests.";
+      this.isRequest=false;
+      document.getElementById("display request").innerHTML = "<span class='textt'>There are no more requests.</span>";
     }
   };
  
@@ -253,13 +256,27 @@ class GroundStation extends React.Component {
   render() {
     return (
       <div>
-        <div> 
-          <input type="file" accept=".json" onChange={(e) => this.showFile(e)} onClick={(e) => (e.target.value = null)} />
-          <button onClick={(e) => this.getInfoFromServer(e)} className='server-button'>Get from server</button>
+        <div className='file'> 
+          <label for='file-upload' class='custom-file-upload file-btn'>
+            Upload JSON File
+          </label>
+          <input
+            id='file-upload'
+            type='file'
+            accept='.json'
+            onChange={(e) => {
+              var file = e.target.files[0];
+              if (file !== undefined) {
+                this.showFile(e);
+              }
+          }}
+          />
+          {/* <input type="file" accept=".json" onChange={(e) => this.showFile(e)} onClick={(e) => (e.target.value = null)} /> */}
+          <button onClick={(e) => this.getInfoFromServer(e)} className='server-button file-btn'>Get from server</button>
         </div>
         <div><p id="display request"></p></div>
         <div className='my-btn-div'>
-          <button disabled={!this.state.requestValid} className="btn btn-success my-btn" onClick={this.accept}>Accept</button>
+          {this.isRequest && <button disabled={!this.state.requestValid} className="btn btn-success my-btn" id='accept' onClick={this.accept}>Accept</button>}
           <button disabled={!this.state.requestValid} className="btn btn-success my-btn" onClick={this.reject}>Reject</button>
         </div>
         <div id="timeline"></div>
