@@ -224,6 +224,7 @@ class Form extends React.Component {
 
     render() {
         return (
+            <div className='back'>
             <div className='submit-fields'>
                 <form onSubmit={this.handleSubmit}>
                     <label>Satellite ID</label>
@@ -275,10 +276,11 @@ class Form extends React.Component {
                         onChange={this.handleChange}                        
                         className='not-date-picker'
                     />
+                    <label>Date/Time</label>
                     <DatePicker
                         selected={this.state.date} 
                         onChange={this.handleDateChange}
-                        placeholderText={'dd/mm/yyyy'}
+                        // placeholderText={'dd/mm/yyyy'}
                         timeIntervals='15'
                         showTimeSelect
                         timeFormat="HH:mm"
@@ -288,30 +290,34 @@ class Form extends React.Component {
                         showYearDropdown
                         scrollableYearDropdown
                     />
+                    <button 
+                        className='reset'
+                        onClick={(event) => {
+                            event.preventDefault();
+                            this.setState({
+                                satelliteId: '',
+                                category: '',
+                                message: '',
+                                length: '',
+                                value: '',
+                                date: '',
+                                day: '',
+                                month: '',
+                                year: '',
+                                hours: '',
+                                minutes: '',
+                                dateTime: '',
+                                isPending: ''
+                            });
+                        }}
+                    >
+                        Reset
+                    </button>
+
                     { !this.state.isPending && <button type='submit' className='submit-button'>Submit</button>}
                     { this.state.isPending && <button disabled>Adding request</button>}
                 </form>
-                <button onClick={(event) => {
-                    event.preventDefault();
-                    this.setState({
-                        satelliteId: '',
-                        category: '',
-                        message: '',
-                        length: '',
-                        value: '',
-                        date: '',
-                        day: '',
-                        month: '',
-                        year: '',
-                        hours: '',
-                        minutes: '',
-                        dateTime: '',
-                        isPending: ''
-                    });
-                }}
-                >
-                    Reset
-                </button>
+            </div>
             </div>
         )
     }

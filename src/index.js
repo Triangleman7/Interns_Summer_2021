@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import GroundStation from './GroundStation';
 import reportWebVitals from './reportWebVitals';
+import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <GroundStation />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

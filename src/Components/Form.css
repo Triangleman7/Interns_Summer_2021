@@ -1,5 +1,5 @@
 .submit-fields {
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
   text-align: center;
 }
@@ -16,6 +16,7 @@
   border: 1px solid #ddd;
   box-sizing: border-box;
   display: block;
+  border-radius: 5px;
 }
 
 input {
@@ -25,15 +26,26 @@ input {
   border: 1px solid #ddd;
   box-sizing: border-box;
   display: block;
+  border-radius: 5px;
 }
 
+/* select {
+  background-image: url(triangle.png);
+} */
+
 .submit-fields button {
-  background: #696969;
+  background: #0039a6;
   color: #fff;
-  border: 0;
-  padding: 8px;
-  border-radius: 8px;
+  /* border: 0; */
+  padding: 5px 20px;
+  border-radius: 25px;
   cursor: pointer;
+  transition-duration: 0.35s;
+}
+
+.submit-fields button:hover {
+  background-color: white; /* Green */
+  color: black;
 }
 
 textarea {
@@ -46,7 +58,16 @@ textarea {
 }
 
 button {
-  display: block;
   left: 50%;
-  margin: 0 auto 5px auto;
+  margin: 0 5px;
+  /* margin: 0 auto 5px auto; */
+  border: 2px solid #0039a6; /* Green */
+}
+
+.reset {
+  margin-left: 85px;
+}
+
+label {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
