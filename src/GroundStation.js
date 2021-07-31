@@ -229,18 +229,11 @@ class GroundStation extends React.Component {
       for (let i = 0; i < schedule.length; i++) {
         textt += "<li>" + "[ Satellite ID: " +  schedule[i].satelliteId + 
         " ] [ Message: " + schedule[i].message + " ] [ Length: " +  schedule[i].length + " ] [ Value: " +
-        schedule[i].value + " ] [ Time: " + schedule[i].time + ", " +  
+        schedule[i].value + " ] [ Time: " + schedule[i].time + 
         " ] [ Date: " + schedule[i].month + "/" + schedule[i].day + "/" + schedule[i].year + " ] "+ "</li>";
       }
       textt += "</ol>";
- 
     }
-
-// "[ Satellite ID: " + request.satelliteId + " ] [ Message: " + 
-// request.message + " ] [ Time: " + request.length + " ] [ Value: " +
-// request.value + " ] [ Time: " + this.displayTime(request.hours, request.minutes) +  " ] [ Date: " + request.month + "/" + request.day + "/" + request.year + " ]"
-
-
     document.getElementById("display schedule").innerHTML = textt;
   }
  
@@ -283,8 +276,7 @@ class GroundStation extends React.Component {
               }
           }}
           />
-          {/* <input type="file" accept=".json" onChange={(e) => this.showFile(e)} onClick={(e) => (e.target.value = null)} /> */}
-          <button onClick={(e) => this.getInfoFromServer(e)} className='server-button file-btn'>Get from server</button>
+          <button onClick={(e) => this.getInfoFromServer(e)} className='server-button file-btn'>Get From Server</button>
         </div>
         <div><p id="display request"></p></div>
         <div className='my-btn-div'>
