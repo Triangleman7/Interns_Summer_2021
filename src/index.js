@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import GroundStation from './GroundStation';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 
